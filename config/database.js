@@ -8,10 +8,7 @@ const connectDB = async () => {
     console.log('Attempting to connect to MongoDB...');
     console.log('MongoDB URI:', process.env.MONGODB_URI ? 'URI is set' : 'URI is missing');
     
-    const conn = await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const conn = await mongoose.connect(process.env.MONGODB_URI);
 
     console.log(`✅ MongoDB Connected Successfully!`);
     console.log(`📍 Host: ${conn.connection.host}`);
@@ -29,6 +26,8 @@ const connectDB = async () => {
       console.error('🌐 Network error - Please check your internet connection');
     } else if (error.message.includes('ENOTFOUND')) {
       console.error('🔍 DNS resolution failed - Please check your cluster URL');
+      console.error('💡 Your cluster URL should look like: cluster0.xxxxx.mongodb.net');
+      console.error('💡 Make sure to get the complete URL from MongoDB Atlas');
     }
     
     process.exit(1);
